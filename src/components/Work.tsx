@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Sparkles, Info, Video } from 'lucide-react';
+import { Play, Sparkles, Info, Video, Maximize2 } from 'lucide-react';
 import { INITIAL_VIDEOS, type VideoProject } from '../data/portfolioData';
 import { VideoModal } from './VideoModal';
 
@@ -134,13 +134,11 @@ export const Work: React.FC = () => {
               <div
                 key={video.id}
                 className="vcard"
-                onClick={() => setActiveProject(video)}
                 style={{
                   background: 'var(--panel)',
                   border: '1px solid var(--line)',
                   borderRadius: '6px',
                   overflow: 'hidden',
-                  cursor: 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
@@ -152,7 +150,7 @@ export const Work: React.FC = () => {
                   style={{
                     aspectRatio: '9/16',
                     position: 'relative',
-                    background: 'linear-gradient(165deg, var(--panel-2) 0%, var(--bg) 100%)',
+                    background: '#000000',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -170,12 +168,13 @@ export const Work: React.FC = () => {
                       left: '12px',
                       fontSize: '10.5px',
                       color: 'var(--flame)',
-                      background: 'rgba(11, 11, 14, 0.8)',
+                      background: 'rgba(11, 11, 14, 0.85)',
                       backdropFilter: 'blur(6px)',
                       padding: '3px 8px',
                       borderRadius: '2px',
                       border: '1px solid rgba(255, 90, 54, 0.3)',
                       zIndex: 3,
+                      pointerEvents: 'none',
                     }}
                   >
                     {video.timecode}
@@ -191,12 +190,13 @@ export const Work: React.FC = () => {
                         right: '12px',
                         fontSize: '9.5px',
                         color: 'var(--text)',
-                        background: 'rgba(22, 22, 27, 0.8)',
+                        background: 'rgba(22, 22, 27, 0.85)',
                         backdropFilter: 'blur(6px)',
                         padding: '3px 7px',
                         borderRadius: '2px',
                         border: '1px solid var(--line)',
                         zIndex: 3,
+                        pointerEvents: 'none',
                       }}
                     >
                       {video.tag}
@@ -211,51 +211,23 @@ export const Work: React.FC = () => {
                         width="100%"
                         height="100%"
                         allow="autoplay; fullscreen"
-                        style={{ border: 'none', pointerEvents: 'none' }}
+                        style={{ border: 'none' }}
                         title={video.title}
                       />
                     ) : (
-                      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                        <video
-                          src={video.videoUrl}
-                          muted
-                          loop
-                          autoPlay
-                          playsInline
-                          preload="metadata"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                        />
-                        <div
-                          style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: 'linear-gradient(to top, rgba(11, 11, 14, 0.6) 0%, transparent 50%)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            pointerEvents: 'none',
-                          }}
-                        >
-                          <div
-                            className="play-node"
-                            style={{
-                              width: '48px',
-                              height: '48px',
-                              borderRadius: '50%',
-                              border: '1.5px solid rgba(255, 255, 255, 0.8)',
-                              background: 'rgba(11, 11, 14, 0.65)',
-                              backdropFilter: 'blur(6px)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              color: '#ffffff',
-                              transition: 'all 0.25s ease',
-                            }}
-                          >
-                            <Play size={18} fill="currentColor" style={{ marginLeft: '2px' }} />
-                          </div>
-                        </div>
-                      </div>
+                      <video
+                        src={video.videoUrl}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                          background: '#000000',
+                        }}
+                      />
                     )
                   ) : (
                     /* Elegant Interactive Placeholder */
@@ -352,13 +324,19 @@ export const Work: React.FC = () => {
                   </div>
 
                   <h4
+                    onClick={() => setActiveProject(video)}
                     style={{
                       fontFamily: "'Archivo Black', sans-serif",
                       fontSize: '16px',
                       color: 'var(--text)',
                       marginBottom: '8px',
                       letterSpacing: '-0.3px',
+                      cursor: 'pointer',
+                      transition: 'color 0.2s',
                     }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--violet)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text)')}
+                    title="Click to open theater mode"
                   >
                     {video.title}
                   </h4>
@@ -376,24 +354,65 @@ export const Work: React.FC = () => {
                     {video.description}
                   </p>
 
-                  {/* Tool chips */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {video.toolsUsed.map((t) => (
-                      <span
-                        key={t}
-                        className="mono"
-                        style={{
-                          fontSize: '9.5px',
-                          padding: '2px 7px',
-                          borderRadius: '2px',
-                          border: '1px solid var(--line)',
-                          color: 'var(--text)',
-                          background: 'var(--bg)',
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
+                  {/* Tool chips & Theater Mode Button */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '8px',
+                      paddingTop: '12px',
+                      borderTop: '1px solid var(--line)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {video.toolsUsed.map((t) => (
+                        <span
+                          key={t}
+                          className="mono"
+                          style={{
+                            fontSize: '9.5px',
+                            padding: '2px 7px',
+                            borderRadius: '2px',
+                            border: '1px solid var(--line)',
+                            color: 'var(--text)',
+                            background: 'var(--bg)',
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setActiveProject(video)}
+                      className="mono"
+                      style={{
+                        fontSize: '10.5px',
+                        color: 'var(--violet)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        padding: '4px 8px',
+                        borderRadius: '3px',
+                        background: 'rgba(139, 92, 246, 0.1)',
+                        border: '1px solid var(--violet-dim)',
+                        transition: 'all 0.2s ease',
+                        flexShrink: 0,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.25)';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
+                        e.currentTarget.style.color = 'var(--violet)';
+                      }}
+                      title="Expand to theater view"
+                    >
+                      <Maximize2 size={11} />
+                      Theater
+                    </button>
                   </div>
                 </div>
               </div>

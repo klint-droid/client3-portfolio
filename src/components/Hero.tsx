@@ -1,8 +1,29 @@
-import React from 'react';
-import { Sparkles, Play } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Sparkles, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import sample1 from '../assets/videos/SAMPLE 1.mp4';
 
 export const Hero: React.FC = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
   return (
     <header
       className="hero-section"
@@ -228,18 +249,22 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              {/* Main Image View */}
+              {/* Live Video Viewfinder */}
               <div
                 style={{
                   aspectRatio: '4/3',
                   position: 'relative',
                   overflow: 'hidden',
-                  background: 'var(--panel-2)',
+                  background: '#000000',
                 }}
               >
-                <img
-                  src="/hero-preview.jpg"
-                  alt="Christian James Amar — AI Video Specialist Studio"
+                <video
+                  ref={videoRef}
+                  src={sample1}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
                   style={{
                     width: '100%',
                     height: '100%',
@@ -247,27 +272,80 @@ export const Hero: React.FC = () => {
                     display: 'block',
                   }}
                 />
-                
-                {/* Visual watermark overlay */}
+
+                {/* Live HUD interactive controls */}
                 <div
                   style={{
                     position: 'absolute',
                     bottom: '12px',
                     left: '12px',
-                    background: 'rgba(11, 11, 14, 0.85)',
-                    padding: '4px 10px',
-                    borderRadius: '3px',
-                    border: '1px solid var(--line)',
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: '10.5px',
-                    color: 'var(--text)',
+                    right: '12px',
                     display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
-                    gap: '6px',
+                    zIndex: 4,
                   }}
                 >
-                  <Sparkles size={12} color="var(--violet)" />
-                  AI STUDIO • UGC PIPELINE
+                  <div
+                    style={{
+                      background: 'rgba(11, 11, 14, 0.85)',
+                      padding: '4px 10px',
+                      borderRadius: '3px',
+                      border: '1px solid var(--line)',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '10px',
+                      color: 'var(--text)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                    }}
+                  >
+                    <Sparkles size={12} color="var(--violet)" />
+                    LIVE AI UGC • SAMPLE 1
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      onClick={toggleMute}
+                      className="mono"
+                      style={{
+                        background: 'rgba(11, 11, 14, 0.85)',
+                        border: '1px solid var(--line)',
+                        color: isMuted ? 'var(--muted)' : 'var(--flame)',
+                        padding: '5px 8px',
+                        borderRadius: '3px',
+                        fontSize: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        cursor: 'pointer',
+                      }}
+                      title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+                    >
+                      {isMuted ? <VolumeX size={12} /> : <Volume2 size={12} />}
+                      <span>{isMuted ? 'UNMUTE' : 'SOUND ON'}</span>
+                    </button>
+
+                    <button
+                      onClick={togglePlay}
+                      className="mono"
+                      style={{
+                        background: 'rgba(11, 11, 14, 0.85)',
+                        border: '1px solid var(--line)',
+                        color: 'var(--text)',
+                        padding: '5px 8px',
+                        borderRadius: '3px',
+                        fontSize: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        cursor: 'pointer',
+                      }}
+                      title={isPlaying ? 'Pause' : 'Play'}
+                    >
+                      {isPlaying ? <Pause size={12} /> : <Play size={12} fill="currentColor" />}
+                    </button>
+                  </div>
                 </div>
               </div>
 
