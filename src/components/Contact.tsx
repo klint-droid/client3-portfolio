@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Mail, MessageCircle, Copy, Check, ArrowUpRight, ArrowUp, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { WhatsAppPromptModal } from './WhatsAppPromptModal';
 
 export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
+  const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.contact.email);
@@ -71,22 +73,21 @@ export const Contact: React.FC = () => {
             flexWrap: 'wrap',
           }}
         >
-          {/* WhatsApp Primary Button */}
-          <a
-            href={PERSONAL_INFO.contact.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* WhatsApp Button with App / Web Prompt */}
+          <button
+            onClick={() => setShowWhatsAppModal(true)}
             className="btn btn-flame"
             style={{
               padding: '16px 28px',
               fontSize: '13px',
               borderRadius: '3px',
+              cursor: 'pointer',
             }}
           >
             <MessageCircle size={18} />
             <span>WhatsApp: {PERSONAL_INFO.contact.whatsappNumber}</span>
             <ArrowUpRight size={16} />
-          </a>
+          </button>
 
           {/* Email Direct Link */}
           <a
@@ -207,6 +208,12 @@ export const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* WhatsApp App vs Web Prompt Modal */}
+      <WhatsAppPromptModal
+        isOpen={showWhatsAppModal}
+        onClose={() => setShowWhatsAppModal(false)}
+      />
     </footer>
   );
 };
