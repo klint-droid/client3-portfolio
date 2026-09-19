@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Play, ExternalLink } from 'lucide-react';
+import { X, Play, Mail } from 'lucide-react';
 import { PERSONAL_INFO, type VideoProject } from '../data/portfolioData';
 
 interface VideoModalProps {
@@ -249,14 +249,12 @@ export const VideoModal: React.FC<VideoModalProps> = ({ project, onClose }) => {
           </p>
 
           <a
-            href={PERSONAL_INFO.contact.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`mailto:${PERSONAL_INFO.contact.email}?subject=${encodeURIComponent(`Inquiry - ${project.title}`)}`}
             className="btn btn-flame btn-sm"
             style={{ width: '100%', justifyContent: 'center' }}
           >
-            Inquire About This Format
-            <ExternalLink size={14} />
+            <Mail size={14} />
+            Inquire via Email
           </a>
         </div>
       </div>

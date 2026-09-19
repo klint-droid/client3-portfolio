@@ -1,3 +1,9 @@
+import sample1 from '../assets/videos/SAMPLE 1.mp4';
+import sample2 from '../assets/videos/SAMPLE 2.mp4';
+import sample3 from '../assets/videos/SAMPLE 3.mp4';
+import sample4 from '../assets/videos/SAMPLE 4.mp4';
+import sample5 from '../assets/videos/SAMPLE 5.mp4';
+
 export interface VideoProject {
   id: string;
   title: string;
@@ -173,6 +179,7 @@ export const INITIAL_VIDEOS: VideoProject[] = [
     timecode: "00:24",
     description: "High-hook UGC ad showcasing product benefits, unboxing angle, and direct response call to action for Meta & TikTok.",
     toolsUsed: ["CapCut", "Higgsfield", "Eleven Labs"],
+    videoUrl: sample1,
     aspectRatio: "9/16",
     tag: "High Conversion"
   },
@@ -183,6 +190,7 @@ export const INITIAL_VIDEOS: VideoProject[] = [
     timecode: "00:18",
     description: "Hyper-realistic AI avatar presenting customer review testimonial with natural conversational delivery and product close-ups.",
     toolsUsed: ["HeyGen", "Claude", "CapCut"],
+    videoUrl: sample2,
     aspectRatio: "9/16",
     tag: "Authentic UGC"
   },
@@ -193,6 +201,7 @@ export const INITIAL_VIDEOS: VideoProject[] = [
     timecode: "00:30",
     description: "Clean macro product shots with 3D-like depth, showcasing ingredients, craftsmanship, and aesthetic brand value.",
     toolsUsed: ["Google Flow", "ChatGPT", "CapCut"],
+    videoUrl: sample3,
     aspectRatio: "9/16",
     tag: "Brand Aesthetic"
   },
@@ -203,6 +212,7 @@ export const INITIAL_VIDEOS: VideoProject[] = [
     timecode: "00:22",
     description: "First-3-second retention hook addressing a core customer pain point followed by immediate product demonstration.",
     toolsUsed: ["Higgsfield", "Eleven Labs", "CapCut"],
+    videoUrl: sample4,
     aspectRatio: "9/16",
     tag: "TikTok / Reels"
   },
@@ -213,17 +223,8 @@ export const INITIAL_VIDEOS: VideoProject[] = [
     timecode: "00:28",
     description: "Story-driven narrative combining captivating AI visuals with an engaging soundscape tailored to maximize watch time.",
     toolsUsed: ["Google Flow", "Claude", "Eleven Labs"],
+    videoUrl: sample5,
     aspectRatio: "9/16",
     tag: "Viral Retention"
-  },
-  {
-    id: "v-06",
-    title: "Multi-Angle AI Demo Showcase",
-    category: "Product Videos",
-    timecode: "00:20",
-    description: "Multi-scene dynamic showcase highlighting key product attributes, texture, and real-world lifestyle application.",
-    toolsUsed: ["HeyGen", "Higgsfield", "CapCut"],
-    aspectRatio: "9/16",
-    tag: "Social Commerce"
   }
 ];

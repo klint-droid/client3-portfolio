@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const Navbar: React.FC = () => {
@@ -126,14 +126,12 @@ export const Navbar: React.FC = () => {
             </a>
 
             <a
-              href={PERSONAL_INFO.contact.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${PERSONAL_INFO.contact.email}`}
               className="btn btn-solid btn-sm"
               style={{ marginLeft: '12px' }}
             >
+              <Mail size={14} />
               Let's Talk
-              <ArrowUpRight size={14} />
             </a>
           </div>
 
@@ -205,13 +203,12 @@ export const Navbar: React.FC = () => {
             05 — Contact
           </a>
           <a
-            href={PERSONAL_INFO.contact.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`mailto:${PERSONAL_INFO.contact.email}`}
             className="btn btn-flame"
-            style={{ marginTop: '10px', textAlign: 'center' }}
+            style={{ marginTop: '10px', textAlign: 'center', justifyContent: 'center' }}
           >
-            WhatsApp ({PERSONAL_INFO.contact.whatsappNumber})
+            <Mail size={16} />
+            Let's Talk ({PERSONAL_INFO.contact.email})
           </a>
         </div>
       )}

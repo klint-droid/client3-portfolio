@@ -215,13 +215,47 @@ export const Work: React.FC = () => {
                         title={video.title}
                       />
                     ) : (
-                      <video
-                        src={video.videoUrl}
-                        muted
-                        loop
-                        playsInline
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
+                      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                        <video
+                          src={video.videoUrl}
+                          muted
+                          loop
+                          autoPlay
+                          playsInline
+                          preload="metadata"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'linear-gradient(to top, rgba(11, 11, 14, 0.6) 0%, transparent 50%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            pointerEvents: 'none',
+                          }}
+                        >
+                          <div
+                            className="play-node"
+                            style={{
+                              width: '48px',
+                              height: '48px',
+                              borderRadius: '50%',
+                              border: '1.5px solid rgba(255, 255, 255, 0.8)',
+                              background: 'rgba(11, 11, 14, 0.65)',
+                              backdropFilter: 'blur(6px)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: '#ffffff',
+                              transition: 'all 0.25s ease',
+                            }}
+                          >
+                            <Play size={18} fill="currentColor" style={{ marginLeft: '2px' }} />
+                          </div>
+                        </div>
+                      </div>
                     )
                   ) : (
                     /* Elegant Interactive Placeholder */

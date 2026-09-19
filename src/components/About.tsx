@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, ShoppingBag, Zap, TrendingUp, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Sparkles, ShoppingBag, Zap, TrendingUp, CheckCircle2, ArrowRight, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const About: React.FC = () => {
@@ -132,12 +132,11 @@ export const About: React.FC = () => {
                 <ArrowRight size={14} />
               </a>
               <a
-                href={PERSONAL_INFO.contact.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`mailto:${PERSONAL_INFO.contact.email}`}
                 className="btn btn-line btn-sm"
               >
-                Chat on WhatsApp
+                <Mail size={14} />
+                Send an Email
               </a>
             </div>
           </div>
