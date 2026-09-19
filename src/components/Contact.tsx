@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Mail, MessageCircle, Copy, Check, ArrowUpRight, ArrowUp, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { WhatsAppPromptModal } from './WhatsAppPromptModal';
+import { EmailInquiryModal } from './EmailInquiryModal';
 
 export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.contact.email);
@@ -89,19 +91,20 @@ export const Contact: React.FC = () => {
             <ArrowUpRight size={16} />
           </button>
 
-          {/* Email Direct Link */}
-          <a
-            href={`mailto:${PERSONAL_INFO.contact.email}`}
+          {/* Email Inquiry Modal Trigger */}
+          <button
+            onClick={() => setShowEmailModal(true)}
             className="btn btn-line"
             style={{
               padding: '16px 24px',
               fontSize: '13px',
               borderRadius: '3px',
+              cursor: 'pointer',
             }}
           >
             <Mail size={18} />
-            <span>{PERSONAL_INFO.contact.email}</span>
-          </a>
+            <span>Send Email Inquiry</span>
+          </button>
 
           {/* Quick Copy Email Button */}
           <button
@@ -213,6 +216,12 @@ export const Contact: React.FC = () => {
       <WhatsAppPromptModal
         isOpen={showWhatsAppModal}
         onClose={() => setShowWhatsAppModal(false)}
+      />
+
+      {/* Email Inquiry Modal (Templated or Manual) */}
+      <EmailInquiryModal
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
       />
     </footer>
   );

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { EmailInquiryModal } from './EmailInquiryModal';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,14 +127,14 @@ export const Navbar: React.FC = () => {
               Contact
             </a>
 
-            <a
-              href={`mailto:${PERSONAL_INFO.contact.email}`}
+            <button
+              onClick={() => setShowEmailModal(true)}
               className="btn btn-solid btn-sm"
-              style={{ marginLeft: '12px' }}
+              style={{ marginLeft: '12px', cursor: 'pointer' }}
             >
               <Mail size={14} />
               Let's Talk
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -202,16 +204,25 @@ export const Navbar: React.FC = () => {
           >
             05 — Contact
           </a>
-          <a
-            href={`mailto:${PERSONAL_INFO.contact.email}`}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setShowEmailModal(true);
+            }}
             className="btn btn-flame"
-            style={{ marginTop: '10px', textAlign: 'center', justifyContent: 'center' }}
+            style={{ marginTop: '10px', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
           >
             <Mail size={16} />
             Let's Talk ({PERSONAL_INFO.contact.email})
-          </a>
+          </button>
         </div>
       )}
+
+      {/* Email Inquiry Modal (Templated or Custom) */}
+      <EmailInquiryModal
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
+      />
 
       <style>{`
         @media (max-width: 768px) {

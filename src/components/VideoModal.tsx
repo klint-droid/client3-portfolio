@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Play, Mail } from 'lucide-react';
-import { PERSONAL_INFO, type VideoProject } from '../data/portfolioData';
+import type { VideoProject } from '../data/portfolioData';
+import { EmailInquiryModal } from './EmailInquiryModal';
 
 interface VideoModalProps {
   project: VideoProject | null;
@@ -8,6 +9,8 @@ interface VideoModalProps {
 }
 
 export const VideoModal: React.FC<VideoModalProps> = ({ project, onClose }) => {
+  const [showEmailModal, setShowEmailModal] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -248,16 +251,23 @@ export const VideoModal: React.FC<VideoModalProps> = ({ project, onClose }) => {
             {project.description}
           </p>
 
-          <a
-            href={`mailto:${PERSONAL_INFO.contact.email}?subject=${encodeURIComponent(`Inquiry - ${project.title}`)}`}
+          <button
+            onClick={() => setShowEmailModal(true)}
             className="btn btn-flame btn-sm"
-            style={{ width: '100%', justifyContent: 'center' }}
+            style={{ width: '100%', justifyContent: 'center', cursor: 'pointer' }}
           >
             <Mail size={14} />
             Inquire via Email
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Email Inquiry Modal */}
+      <EmailInquiryModal
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
+        initialSubject={`Inquiry regarding ${project.title}`}
+      />
     </div>
   );
 };
